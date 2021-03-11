@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ltts.projectname.Dao.TeamDao;
-import com.ltts.projectname.model.Team;
+import com.ltts.projectname.Dao.UserDao;
+import com.ltts.projectname.model.user;
 
 /**
- * Servlet implementation class InsertTeamServlet
+ * Servlet implementation class UserServlet
  */
-@WebServlet("/InsertTeamServlet")
-public class InsertTeamServlet extends HttpServlet {
+@WebServlet("/UserServlet")
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertTeamServlet() {
+    public UserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,17 +41,25 @@ public class InsertTeamServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		int teamid = Integer.parseInt(request.getParameter("teamid"));
-		String teamname=request.getParameter("teamname");
-		String ownername = request.getParameter("ownername");
-		String coachname = request.getParameter("coachname");
+		String emailid = request.getParameter("emailid");
+		String mobile = request.getParameter("mobile");
+		String name = request.getParameter("name");
 		
-		Team p=new Team(teamid,teamname,ownername,coachname);
-		System.out.println("Inside Servlet: "+p);
-		TeamDao pd=new TeamDao();
+		String dob = request.getParameter("dob");
+		Date d = Date.valueOf(dob);
+		String address = request.getParameter("address");
+		String password = request.getParameter("password");
+		String usertype = request.getParameter("usertype");
+		
+		
+		
+		user u=new user(emailid,mobile,name,d,address,password,usertype);
+		
+		//System.out.println("Inside Servlet: "+u);
+		UserDao pd=new UserDao();
 		boolean b=false;
 		try {
-			b=pd.insertTeam(p); // Control TRanfers to Dao file
+			b=pd.insertUser(u); // Control TRanfers to Dao file
 			System.out.println("Successfully Inserted...");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
