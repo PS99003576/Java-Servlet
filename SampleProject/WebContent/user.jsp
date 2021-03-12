@@ -7,8 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <form action="./ValidServlet" method="post">
-User Name: <input type = "text" name = "name"></br>
+User Name: <input type = "text" name = "name" align = center></br>
 password: <input type = "password" name = "password"></br>
 
 <input type="submit" value="Log in">

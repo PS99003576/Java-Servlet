@@ -7,14 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ltts.projectname.configure.MyConnection;
+import com.ltts.projectname.model.Player;
 import com.ltts.projectname.model.Team;
 
 public class TeamDao {
-	public List<Team> getAllTeams(){
-		List<Team> li=new ArrayList<Team >();
+	public List<Team> getAllTeams() throws Exception{
+		List<Team> li=new ArrayList<Team>();
+		Connection mc=MyConnection.getConnection(); // TRanfers control to another 
+		java.sql.Statement ps=mc.createStatement();
+		ResultSet rs=ps.executeQuery("select * from team");
 		
-		return li;
+		while(rs.next()) {
+			li.add(new Team(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getString(4)));
+			
 		}
+		return li;
+		
+	}
 	public Team getTeamById(int id) {
 		Team t = new Team();
 			

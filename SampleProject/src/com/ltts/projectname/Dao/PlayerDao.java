@@ -10,22 +10,32 @@ import java.util.List;
 
 import com.ltts.projectname.configure.MyConnection;
 import com.ltts.projectname.model.Player;
+import com.mysql.cj.xdevapi.Statement;
 
 
 
 
 public class PlayerDao {
-	public List<Player> getAllPlayers()
-	{
-		List<Player> li= new ArrayList<Player>();
-		return li;
-	}
-	public Player getPlayerById(int id)
-	{
+	
+	public Player getPlayerById(int id) throws Exception {
 		Player p=new Player();
+		List<Player> li=getAllPlayers();
+		for(Player p1:li) {
+			if(p1.getPlayer_id() == id) {
+				p.setPlayer_id(id);
+				p.setName(p1.getName());
+				p.setDateOfBirth(p1.getDateOfBirth());
+				p.setNationality(p1.getNationality());
+				p.setSkills(p1.getSkills());
+				p.setRuns(p1.getRuns());
+				p.setWickets(p1.getWickets());
+				p.setNumber_of_matches(p1.getNumber_of_matches());
+				p.setTeam_id(p1.getTeam_id());
+			}
+		}
+		
 		return p;
 	}
-	
 	public boolean insertPlayer(Player p) throws Exception
 	{
 		Connection c= MyConnection.getConnection();
@@ -43,23 +53,20 @@ public class PlayerDao {
 		return ps.execute();
 		
 	}
-	
-	public void getAll(String name) throws Exception
-	{
-		Connection c= MyConnection.getConnection();
-		PreparedStatement ps=c.prepareStatement("Select p.name,t.teamname,t.coachname,TIMESTAMPDIFF(YEAR, dateOfBirth, CURDATE()) AS age from player as p inner join team as t on p.teamid=t.teamid where p.name=?");
-		ps.setString(1, name);
-		ResultSet rs=ps.executeQuery();
-		while(rs.next())
-		{
-			String name1=rs.getString(1);
-			String n=rs.getString(2);
-			String cn=rs.getString(3);
-			String dob=rs.getString(4);
-			System.out.println("Player Name: "+name1+" Team Name: "+n+" Coach Name: "+cn+" Age: "+dob);
+	public List<Player> getAllPlayers() throws Exception{
+		List<Player> li=new ArrayList<Player>();
+		Connection mc=MyConnection.getConnection(); // TRanfers control to another 
+		java.sql.Statement ps=mc.createStatement();
+		ResultSet rs=ps.executeQuery("select * from player");
+		//Player p=new Player();
+		while(rs.next()) {
+			li.add(new Player(rs.getInt(1),rs.getString(2),rs.getDate(3), rs.getString(4),rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9)));
 			
 		}
+		return li;
+		
 	}
+	
 
 	public boolean updatePlayer(int id,String name) throws Exception
 	{
