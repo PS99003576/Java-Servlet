@@ -27,28 +27,15 @@ public class UserDao {
 	}
 
 
-	/*
-	 * public void ValidUser(String name, String password) throws Exception { //
-	 * TODO Auto-generated method stub Connection c = MyConnection.getConnection();
-	 * Statement st = c.createStatement(); ResultSet rs;
-	 * 
-	 * rs =
-	 * st.executeQuery("select * from user where name = '"+name+"' and password = '"
-	 * +password+"'"); if (rs.next()) { System.out.println("nice");; }else {
-	 * System.out.println("invalid credentials"); }
-	 * 
-	 * }
-	 */
-	public void ValidUser(user us) throws Exception
+	public boolean ValidUser(user us) throws Exception
 	{
 		Connection c = MyConnection.getConnection();
-		Statement st = c.createStatement(); ResultSet rs;
-		
-		  rs = st.executeQuery("select * from user where name = '"+us.getName()+"' and password = '" +us.getPassword()+"'"); 
-		  if (rs.next()) { System.out.println("nice"); }
-		  else {
-		  System.out.println("invalid credentials");
-		  }
+		Statement st = c.createStatement();
+		ResultSet rs;
+		boolean status = false;
+		rs = st.executeQuery("select * from user where name = '"+us.getName()+"' and password = '" +us.getPassword()+"'");
+		status = rs.next();
+		return status;
 	}
 	
 	

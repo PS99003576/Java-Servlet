@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +15,5 @@ password: <input type = "password" name = "password"></br>
 Not an user? <a href="userinsert.html">Sign Up</a>
 <a href="">Don't worry you can view details here!</a></br>
 </form>
-
 </body>
 </html>
-
-

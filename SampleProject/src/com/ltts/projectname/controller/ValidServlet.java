@@ -53,10 +53,17 @@ public class ValidServlet extends HttpServlet {
 		//System.out.println("Inside Servlet: "+u);
 		UserDao pd=new UserDao();
 		
-		boolean b=false;
+		//boolean b=false;
 		try {
-			pd.ValidUser(u); // Control TRanfers to Dao file
-			System.out.println("Successfully Validated...");
+			if(pd.ValidUser(u))
+			{
+				response.sendRedirect("index.html");
+			}
+			else
+			{
+				response.sendRedirect("restricted.jsp");
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
